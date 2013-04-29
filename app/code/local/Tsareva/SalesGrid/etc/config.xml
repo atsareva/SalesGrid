@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : config.xml
+    Created on : April 29, 2013, 5:38 PM
+    Author     : Tsareva Alena <tsareva.as@gmail.com>
+-->
+
+
+<config>
+    <modules>
+        <Tsareva_SalesGrid>
+            <version>0.1.0</version>
+        </Tsareva_SalesGrid>
+    </modules>
+    <global>
+        <blocks>
+            <tsareva_salesgrid>
+                <class>Tsareva_SalesGrid_Block</class>
+            </tsareva_salesgrid>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_grid>Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+    </global>
+    <frontend>
+        <routers>
+            <tsareva_salesgrid>
+                <use>standard</use>
+                <args>
+                    <module>Tsareva_SalesGrid</module>
+                </args>
+            </tsareva_salesgrid>
+        </routers>
+    </frontend>
+    <adminhtml>
+        <!--<layout>
+            <updates>
+                <tsareva_salesgrid>
+                    <file>shoppad.xml</file>
+                </tsareva_salesgrid>
+            </updates>
+        </layout>-->
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <tsareva_grid>
+                                            <title>Configuration</title>
+                                        </tsareva_grid>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <!--<default>
+        <shoppad_config>
+            <config_groups>
+                <url_create>http://magento-dev.theshoppad.com/create.php</url_create>
+                <url_config>http://magento-dev.theshoppad.com/configure.php</url_config>
+                <url_notify>http://magento-dev.theshoppad.com/callback.php</url_notify>
+            </config_groups>
+        </shoppad_config>
+    </default>-->
+</config>
+

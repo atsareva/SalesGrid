@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : system.xml
+    Created on : April 29, 2013, 5:38 PM
+    Author     : Tsareva Alena <tsareva.as@gmail.com>
+-->
+
+<config>
+    <tabs>
+        <tsareva translate="label">
+            <label>Tsareva</label>
+            <sort_order>201</sort_order>
+        </tsareva>
+    </tabs>
+    <sections>
+        <tsareva_grid translate="label">
+            <label>Sales Order Grid</label>
+            <tab>tsareva</tab>
+            <sort_order>999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <config_groups translate="label">
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <url_create translate="label">
+                            <label>Create API User URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                        </url_create>
+                    </fields>
+                </config_groups>
+            </groups>
+        </tsareva_grid>
+    </sections>
+</config>
