@@ -14,7 +14,10 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
     {
 
         $collection = Mage::getResourceModel($this->_getCollectionClass());
-        $collection->getSelect()->join('sales_flat_order', 'main_table.entity_id = sales_flat_order.entity_id', array('customer_email', 'total_item_count'));
+        $collection->getSelect()->join('sales_flat_order', 'main_table.entity_id = sales_flat_order.entity_id', array(
+            'customer_email', 'total_item_count',
+            'customer_name' => new Zend_Db_Expr('concat_ws(" ", sales_flat_order.customer_firstname, sales_flat_order.customer_middlename, sales_flat_order.customer_lastname)'),
+        ));
         $collection->getSelect()->join('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('telephone', 'postcode'));
         $collection->getSelect()->join('sales_flat_order_item', 'sales_flat_order_item.order_id = main_table.entity_id', array(
             'skus'  => new Zend_Db_Expr('group_concat(DISTINCT sales_flat_order_item.sku ORDER BY sales_flat_order_item.item_id SEPARATOR ", ")'),
@@ -75,62 +78,113 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
 
         $this->addColumn('real_order_id', array(
             'header' => Mage::helper('sales')->__('Order #'),
-            'width'  => '5%',
+            'width'  => '80px',
             'type'   => 'text',
             'index'  => 'increment_id',
         ));
 
-        $this->addColumn('billing_name', array(
-            'header' => Mage::helper('sales')->__('Name'),
-            'index'  => 'shipping_name',
-            'type'   => 'text',
-            'width'  => '10%',
-        ));
+        if (!Mage::app()->isSingleStoreMode())
+        {
+            $this->addColumn('store_id', array(
+                'header'          => Mage::helper('sales')->__('Purchased From (Store)'),
+                'index'           => 'store_id',
+                'type'            => 'store',
+                'store_view'      => true,
+                'display_deleted' => true,
+            ));
+        }
 
-        $this->addColumn('postcode', array(
-            'header' => Mage::helper('sales')->__('Postcode'),
-            'index'  => 'postcode',
-            'type'   => 'text',
-            'width'  => '5%',
-        ));
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('name'))
+        {
+            $this->addColumn('customer_name', array(
+                'header' => Mage::helper('sales')->__('Customer Name'),
+                'index'  => 'customer_name',
+                'type'   => 'text',
+            ));
+        }
 
-        $this->addColumn('customer_email', array(
-            'header' => Mage::helper('sales')->__('Email'),
-            'index'  => 'customer_email',
-            'type'   => 'text',
-            'width'  => '10%',
-        ));
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('email'))
+        {
+            $this->addColumn('customer_email', array(
+                'header' => Mage::helper('sales')->__('Email'),
+                'index'  => 'customer_email',
+                'type'   => 'text',
+            ));
+        }
 
-        $this->addColumn('telephone', array(
-            'header' => Mage::helper('sales')->__('Telephone'),
-            'index'  => 'telephone',
-            'type'   => 'text',
-            'width'  => '10%',
-        ));
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('telephone'))
+        {
+            $this->addColumn('telephone', array(
+                'header' => Mage::helper('sales')->__('Telephone'),
+                'index'  => 'telephone',
+                'type'   => 'text',
+            ));
+        }
 
-        $this->addColumn('skus', array(
-            'header' => Mage::helper('sales')->__('Product SKUS'),
-            'index'  => 'skus',
-            'type'   => 'text',
-            'width'  => '10%',
-        ));
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('postcode'))
+        {
+            $this->addColumn('postcode', array(
+                'header' => Mage::helper('sales')->__('Postcode'),
+                'index'  => 'postcode',
+                'type'   => 'text',
+            ));
+        }
 
-        $this->addColumn('names', array(
-            'header' => Mage::helper('Sales')->__('Product Names'),
-            'width'  => '10%',
-            'index'  => 'names',
-            'type'   => 'text',
-        ));
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('bill_to'))
+        {
+            $this->addColumn('billing_name', array(
+                'header' => Mage::helper('sales')->__('Bill to Name'),
+                'index'  => 'billing_name',
+            ));
+        }
 
-        $this->addColumn('total_item_count', array(
-            'header' => Mage::helper('sales')->__('Product Qty'),
-            'index'  => 'total_item_count',
-            'type'   => 'text',
-            'width'  => '5%',
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('ship_to'))
+        {
+            $this->addColumn('shipping_name', array(
+                'header' => Mage::helper('sales')->__('Ship to Name'),
+                'index'  => 'shipping_name',
+            ));
+        }
+
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('skus'))
+        {
+            $this->addColumn('skus', array(
+                'header' => Mage::helper('sales')->__('Product SKUS'),
+                'index'  => 'skus',
+                'type'   => 'text',
+                'width'  => '10%',
+            ));
+        }
+
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('product_names'))
+        {
+            $this->addColumn('names', array(
+                'header' => Mage::helper('Sales')->__('Product Names'),
+                'width'  => '10%',
+                'index'  => 'names',
+                'type'   => 'text',
+            ));
+        }
+
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('qty'))
+        {
+            $this->addColumn('total_item_count', array(
+                'header' => Mage::helper('sales')->__('Product Qty'),
+                'index'  => 'total_item_count',
+                'type'   => 'text',
+                'width'  => '5%',
+            ));
+        }
+
+        $this->addColumn('base_grand_total', array(
+            'header'   => Mage::helper('sales')->__('G.T. (Base)'),
+            'index'    => 'base_grand_total',
+            'type'     => 'currency',
+            'currency' => 'base_currency_code',
         ));
 
         $this->addColumn('grand_total', array(
-            'header'   => Mage::helper('sales')->__('Price'),
+            'header'   => Mage::helper('sales')->__('G.T. (Purchased)'),
             'index'    => 'grand_total',
             'type'     => 'currency',
             'currency' => 'order_currency_code',
@@ -140,14 +194,14 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
             'header' => Mage::helper('sales')->__('Purchased On'),
             'index'  => 'created_at',
             'type'   => 'datetime',
-            'width'  => '10%',
+            'width'  => '100px',
         ));
 
         $this->addColumn('status', array(
             'header'  => Mage::helper('sales')->__('Status'),
             'index'   => 'status',
             'type'    => 'options',
-            'width'   => '5%',
+            'width'   => '70px',
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
         ));
 
@@ -155,7 +209,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
         {
             $this->addColumn('action', array(
                 'header'    => Mage::helper('sales')->__('Action'),
-                'width'     => '5%',
+                'width'     => '50px',
                 'type'      => 'action',
                 'getter'    => 'getId',
                 'actions'   => array(
@@ -177,6 +231,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
         $this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel XML'));
 
         $this->sortColumnsByOrder();
+
         return $this;
     }
 

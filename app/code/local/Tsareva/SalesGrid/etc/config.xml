@@ -13,6 +13,11 @@
         </Tsareva_SalesGrid>
     </modules>
     <global>
+        <helpers>
+            <tsareva_salesgrid>
+                <class>Tsareva_SalesGrid_Helper</class>
+            </tsareva_salesgrid>
+        </helpers>
         <blocks>
             <tsareva_salesgrid>
                 <class>Tsareva_SalesGrid_Block</class>
