@@ -18,7 +18,18 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
             'customer_email', 'total_item_count',
             'customer_name' => new Zend_Db_Expr('concat_ws(" ", sales_flat_order.customer_firstname, sales_flat_order.customer_middlename, sales_flat_order.customer_lastname)'),
         ));
-        $collection->getSelect()->join('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('telephone', 'postcode'));
+
+        $collection->getSelect()->joinLeft('sales_flat_order_address AS billing_address_table', 'main_table.entity_id = billing_address_table.parent_id AND sales_flat_order.billing_address_id = billing_address_table.entity_id', array(
+            'billing_address_string' => new Zend_Db_Expr('concat_ws(", ", billing_address_table.street, billing_address_table.city, billing_address_table.region, billing_address_table.postcode, billing_address_table.telephone)'),
+            'billing_country'        => new Zend_Db_Expr('billing_address_table.country_id'),
+            'billing_phone'          => 'billing_address_table.telephone',
+        ));
+        $collection->getSelect()->joinLeft('sales_flat_order_address AS shipping_address_table', 'main_table.entity_id = shipping_address_table.parent_id AND sales_flat_order.shipping_address_id = shipping_address_table.entity_id', array(
+            'shipping_address_string' => new Zend_Db_Expr('concat_ws(", ", shipping_address_table.street, shipping_address_table.city, shipping_address_table.region, shipping_address_table.postcode, shipping_address_table.telephone)'),
+            'shipping_country'        => new Zend_Db_Expr('shipping_address_table.country_id'),
+            'shipping_phone'          => 'shipping_address_table.telephone',
+        ));
+
         $collection->getSelect()->join('sales_flat_order_item', 'sales_flat_order_item.order_id = main_table.entity_id', array(
             'skus'  => new Zend_Db_Expr('group_concat(DISTINCT sales_flat_order_item.sku ORDER BY sales_flat_order_item.item_id SEPARATOR ", ")'),
             'names' => new Zend_Db_Expr('group_concat(DISTINCT `sales_flat_order_item`.name ORDER BY sales_flat_order_item.item_id SEPARATOR ", ")'),
@@ -67,6 +78,11 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
             {
                 $this->getCollection()->load();
                 $this->_afterLoadCollection();
+                foreach ($this->getCollection()->getItems() as $item)
+                {
+                    $item->setBillingAddressString($item->getBillingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getBillingCountry())->getName());
+                    $item->setShippingAddressString($item->getShippingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getShippingCountry())->getName());
+                }
             }
         }
 
@@ -112,20 +128,38 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
             ));
         }
 
-        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('telephone'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('ship_telephone'))
         {
-            $this->addColumn('telephone', array(
-                'header' => Mage::helper('sales')->__('Telephone'),
-                'index'  => 'telephone',
+            $this->addColumn('shipping_phone', array(
+                'header' => Mage::helper('sales')->__('Shipping Telephone'),
+                'index'  => 'shipping_phone',
                 'type'   => 'text',
             ));
         }
 
-        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('postcode'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('bill_telephone'))
         {
-            $this->addColumn('postcode', array(
-                'header' => Mage::helper('sales')->__('Postcode'),
-                'index'  => 'postcode',
+            $this->addColumn('billing_telephone', array(
+                'header' => Mage::helper('sales')->__('Billing Telephone'),
+                'index'  => 'billing_telephone',
+                'type'   => 'text',
+            ));
+        }
+
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('bill_address'))
+        {
+            $this->addColumn('billing_address_string', array(
+                'header' => Mage::helper('sales')->__('Billing Address'),
+                'index'  => 'billing_address_string',
+                'type'   => 'text',
+            ));
+        }
+
+        if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('ship_address'))
+        {
+            $this->addColumn('shipping_address_string', array(
+                'header' => Mage::helper('sales')->__('Shipping Address'),
+                'index'  => 'shipping_address_string',
                 'type'   => 'text',
             ));
         }
