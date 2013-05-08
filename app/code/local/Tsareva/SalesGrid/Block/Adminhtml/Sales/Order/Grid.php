@@ -78,10 +78,13 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
             {
                 $this->getCollection()->load();
                 $this->_afterLoadCollection();
-                foreach ($this->getCollection()->getItems() as $item)
+                if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('bill_address') || Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('ship_address'))
                 {
-                    $item->setBillingAddressString($item->getBillingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getBillingCountry())->getName());
-                    $item->setShippingAddressString($item->getShippingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getShippingCountry())->getName());
+                    foreach ($this->getCollection()->getItems() as $item)
+                    {
+                        $item->setBillingAddressString($item->getBillingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getBillingCountry())->getName());
+                        $item->setShippingAddressString($item->getShippingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getShippingCountry())->getName());
+                    }
                 }
             }
         }
@@ -139,9 +142,9 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_
 
         if (Mage::helper('tsareva_salesgrid')->getSalesOrderGridItem('bill_telephone'))
         {
-            $this->addColumn('billing_telephone', array(
+            $this->addColumn('billing_phone', array(
                 'header' => Mage::helper('sales')->__('Billing Telephone'),
-                'index'  => 'billing_telephone',
+                'index'  => 'billing_phone',
                 'type'   => 'text',
             ));
         }
