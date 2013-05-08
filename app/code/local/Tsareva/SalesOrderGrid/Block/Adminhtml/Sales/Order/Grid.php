@@ -83,7 +83,9 @@ class Tsareva_SalesOrderGrid_Block_Adminhtml_Sales_Order_Grid extends Mage_Admin
                     foreach ($this->getCollection()->getItems() as $item)
                     {
                         $item->setBillingAddressString($item->getBillingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getBillingCountry())->getName());
-                        $item->setShippingAddressString($item->getShippingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getShippingCountry())->getName());
+
+                        if ($item->getShippingCountry())
+                            $item->setShippingAddressString($item->getShippingAddressString() . ', ' . Mage::getModel('directory/country')->loadByCode($item->getShippingCountry())->getName());
                     }
                 }
             }
