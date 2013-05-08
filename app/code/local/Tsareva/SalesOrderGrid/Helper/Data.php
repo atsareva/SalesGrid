@@ -4,10 +4,10 @@
  * Tsareva Data Helper
  *
  * @category   Tsareva
- * @package    Tsareva_SalesGrid
+ * @package    Tsareva_SalesOrderGrid
  * @author     Tsareva Alena <tsareva.as@gmail.com>
  */
-class Tsareva_SalesGrid_Helper_Data extends Mage_Core_Helper_Abstract
+class Tsareva_SalesOrderGrid_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
     /**

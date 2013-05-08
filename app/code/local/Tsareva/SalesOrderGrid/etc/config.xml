@@ -8,43 +8,43 @@
 
 <config>
     <modules>
-        <Tsareva_SalesGrid>
+        <Tsareva_SalesOrderGrid>
             <version>0.1.0</version>
-        </Tsareva_SalesGrid>
+        </Tsareva_SalesOrderGrid>
     </modules>
     <global>
         <helpers>
-            <tsareva_salesgrid>
-                <class>Tsareva_SalesGrid_Helper</class>
-            </tsareva_salesgrid>
+            <tsareva_salesordergrid>
+                <class>Tsareva_SalesOrderGrid_Helper</class>
+            </tsareva_salesordergrid>
         </helpers>
         <blocks>
-            <tsareva_salesgrid>
-                <class>Tsareva_SalesGrid_Block</class>
-            </tsareva_salesgrid>
+            <tsareva_salesordergrid>
+                <class>Tsareva_SalesOrderGrid_Block</class>
+            </tsareva_salesordergrid>
             <adminhtml>
                 <rewrite>
-                    <sales_order_grid>Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_order_grid>Tsareva_SalesOrderGrid_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
                 </rewrite>
             </adminhtml>
         </blocks>
     </global>
     <frontend>
         <routers>
-            <tsareva_salesgrid>
+            <tsareva_salesordergrid>
                 <use>standard</use>
                 <args>
-                    <module>Tsareva_SalesGrid</module>
+                    <module>Tsareva_SalesOrderGrid</module>
                 </args>
-            </tsareva_salesgrid>
+            </tsareva_salesordergrid>
         </routers>
     </frontend>
     <adminhtml>
         <!--<layout>
             <updates>
-                <tsareva_salesgrid>
+                <tsareva_salesordergrid>
                     <file>shoppad.xml</file>
-                </tsareva_salesgrid>
+                </tsareva_salesordergrid>
             </updates>
         </layout>-->
         <acl>
