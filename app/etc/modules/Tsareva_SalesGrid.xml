@@ -7,9 +7,9 @@
 
 <config>
     <modules>
-        <Tsareva_SalesOrderGrid>
+        <Tsareva_SalesGrid>
             <active>true</active>
             <codePool>local</codePool>
-        </Tsareva_SalesOrderGrid>
+        </Tsareva_SalesGrid>
     </modules>
 </config>

@@ -8,23 +8,24 @@
 
 <config>
     <modules>
-        <Tsareva_SalesOrderGrid>
+        <Tsareva_SalesGrid>
             <version>0.1.0</version>
-        </Tsareva_SalesOrderGrid>
+        </Tsareva_SalesGrid>
     </modules>
     <global>
         <helpers>
             <tsareva_salesordergrid>
-                <class>Tsareva_SalesOrderGrid_Helper</class>
+                <class>Tsareva_SalesGrid_Helper</class>
             </tsareva_salesordergrid>
         </helpers>
         <blocks>
             <tsareva_salesordergrid>
-                <class>Tsareva_SalesOrderGrid_Block</class>
+                <class>Tsareva_SalesGrid_Block</class>
             </tsareva_salesordergrid>
             <adminhtml>
                 <rewrite>
-                    <sales_order_grid>Tsareva_SalesOrderGrid_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_order_grid>Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_invoice_grid>Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid</sales_invoice_grid>
                 </rewrite>
             </adminhtml>
         </blocks>
@@ -34,19 +35,12 @@
             <tsareva_salesordergrid>
                 <use>standard</use>
                 <args>
-                    <module>Tsareva_SalesOrderGrid</module>
+                    <module>Tsareva_SalesGrid</module>
                 </args>
             </tsareva_salesordergrid>
         </routers>
     </frontend>
     <adminhtml>
-        <!--<layout>
-            <updates>
-                <tsareva_salesordergrid>
-                    <file>shoppad.xml</file>
-                </tsareva_salesordergrid>
-            </updates>
-        </layout>-->
         <acl>
             <resources>
                 <all>
@@ -58,9 +52,12 @@
                             <children>
                                 <config>
                                     <children>
-                                        <tsareva_grid>
+                                        <tsareva_sales_grid>
                                             <title>Configuration</title>
-                                        </tsareva_grid>
+                                        </tsareva_sales_grid>
+                                        <tsareva_invoices_grid>
+                                            <title>Configuration</title>
+                                        </tsareva_invoices_grid>
                                     </children>
                                 </config>
                             </children>
@@ -70,14 +67,5 @@
             </resources>
         </acl>
     </adminhtml>
-    <!--<default>
-        <shoppad_config>
-            <config_groups>
-                <url_create>http://magento-dev.theshoppad.com/create.php</url_create>
-                <url_config>http://magento-dev.theshoppad.com/configure.php</url_config>
-                <url_notify>http://magento-dev.theshoppad.com/callback.php</url_notify>
-            </config_groups>
-        </shoppad_config>
-    </default>-->
 </config>
 
