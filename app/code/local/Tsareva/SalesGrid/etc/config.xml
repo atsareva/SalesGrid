@@ -14,14 +14,14 @@
     </modules>
     <global>
         <helpers>
-            <tsareva_salesordergrid>
+            <tsareva_salesgrid>
                 <class>Tsareva_SalesGrid_Helper</class>
-            </tsareva_salesordergrid>
+            </tsareva_salesgrid>
         </helpers>
         <blocks>
-            <tsareva_salesordergrid>
+            <tsareva_salesgrid>
                 <class>Tsareva_SalesGrid_Block</class>
-            </tsareva_salesordergrid>
+            </tsareva_salesgrid>
             <adminhtml>
                 <rewrite>
                     <sales_order_grid>Tsareva_SalesGrid_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
@@ -32,12 +32,12 @@
     </global>
     <frontend>
         <routers>
-            <tsareva_salesordergrid>
+            <tsareva_salesgrid>
                 <use>standard</use>
                 <args>
                     <module>Tsareva_SalesGrid</module>
                 </args>
-            </tsareva_salesordergrid>
+            </tsareva_salesgrid>
         </routers>
     </frontend>
     <adminhtml>

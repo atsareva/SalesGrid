@@ -77,7 +77,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             {
                 $this->getCollection()->load();
                 $this->_afterLoadCollection();
-                if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('bill_address') || Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('ship_address'))
+                if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('bill_address') || Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('ship_address'))
                 {
                     foreach ($this->getCollection()->getItems() as $item)
                     {
@@ -123,7 +123,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             'filter_index' => 'main_table.order_created_at'
         ));
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('name'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('name'))
         {
             $this->addColumn('customer_name', array(
                 'header'       => Mage::helper('sales')->__('Customer Name'),
@@ -133,7 +133,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('email'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('email'))
         {
             $this->addColumn('customer_email', array(
                 'header'       => Mage::helper('sales')->__('Email'),
@@ -143,7 +143,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('bill_to'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('bill_to'))
         {
             $this->addColumn('billing_name', array(
                 'header'       => Mage::helper('sales')->__('Bill to Name'),
@@ -152,7 +152,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('ship_to'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('ship_to'))
         {
             $this->addColumn('shipping_name', array(
                 'header'       => Mage::helper('sales')->__('Ship to Name'),
@@ -161,7 +161,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('ship_telephone'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('ship_telephone'))
         {
             $this->addColumn('shipping_phone', array(
                 'header'       => Mage::helper('sales')->__('Shipping Telephone'),
@@ -171,7 +171,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('bill_telephone'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('bill_telephone'))
         {
             $this->addColumn('billing_phone', array(
                 'header'       => Mage::helper('sales')->__('Billing Telephone'),
@@ -181,7 +181,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('bill_address'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('bill_address'))
         {
             $this->addColumn('billing_address_string', array(
                 'header'       => Mage::helper('sales')->__('Billing Address'),
@@ -191,7 +191,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('ship_address'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('ship_address'))
         {
             $this->addColumn('shipping_address_string', array(
                 'header'       => Mage::helper('sales')->__('Shipping Address'),
@@ -201,7 +201,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('skus'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('skus'))
         {
             $this->addColumn('skus', array(
                 'header'       => Mage::helper('sales')->__('Product SKUS'),
@@ -212,7 +212,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('product_names'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('product_names'))
         {
             $this->addColumn('names', array(
                 'header'       => Mage::helper('Sales')->__('Product Names'),
@@ -223,7 +223,7 @@ class Tsareva_SalesGrid_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminhtm
             ));
         }
 
-        if (Mage::helper('tsareva_salesordergrid')->getSalesInvoiceGridItem('qty'))
+        if (Mage::helper('tsareva_salesgrid')->getSalesInvoiceGridItem('qty'))
         {
             $this->addColumn('total_item_count', array(
                 'header'       => Mage::helper('sales')->__('Product Qty'),
